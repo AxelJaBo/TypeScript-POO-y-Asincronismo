@@ -5,17 +5,21 @@ import { CreateProductDto, UpdateProductDto } from '../dtos/product.dto';
 export class ProductMemoryService {
   private products: Product[] = [];
 
+  getAll(){
+    return this.products;
+  }
+
   create(data: CreateProductDto): Product {
     const newProduct = {
       ...data,
-      id: faker.datatype.number(),
+      id: faker.number.int(),
       category: {
         id: data.categoryId,
         name: faker.commerce.department(),
-        image: faker.image.imageUrl()
+        image: faker.image.url()
       }
     }
-    return newProduct;
+    return this.add(newProduct);
   }
 
   add(product: Product){
@@ -37,4 +41,3 @@ export class ProductMemoryService {
     return this.products.find(item => item.id === id);
   }
 }
-
